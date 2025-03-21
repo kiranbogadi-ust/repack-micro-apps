@@ -1,0 +1,6 @@
+{
+    "config": {
+        "name": "micro-version-url",
+        "url": "App1_1@http://127.0.0.1:9003/android/app1_1.container.js.bundle"
+    }
+}

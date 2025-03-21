@@ -23,18 +23,6 @@ const CounterApp = React.lazy(() => import('App1/CounterApp'));
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  // useEffect(() => {
-  //   console.log('hi');
-  //   if (Platform.OS === 'web') {
-  //     // @ts-ignore
-  //     const script = document.createElement('script');
-  //     script.src = 'http://127.0.0.1:9002/android/app1.container.js.bundle';
-  //     script.async = true;
-  //     // @ts-ignore
-  //     document.body.appendChild(script);
-  //   }
-  // }, []);
-
   return (
     <SafeAreaView>
       <View>
