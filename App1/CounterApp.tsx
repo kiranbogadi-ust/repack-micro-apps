@@ -7,7 +7,7 @@ const CounterApp = () => {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}>Counter App from App1</Text>
+        <Text style={styles.title}>Counter App from App 1</Text>
         <Text style={styles.count}>{count}</Text>
         <View style={styles.buttonContainer}>
           <Button title="-" onPress={() => setCount(count - 1)} />
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 28,

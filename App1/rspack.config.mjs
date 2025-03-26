@@ -33,6 +33,7 @@ export default {
       dts: false,
       exposes: {
         './CounterApp': './CounterApp',
+        './MemberCard': '/src/components/MemberCard',
       },
       shared: Object.fromEntries(
         Object.entries(pkj.dependencies).map(([dep, {version}]) => {

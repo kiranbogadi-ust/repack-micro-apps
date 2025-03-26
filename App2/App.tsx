@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {Suspense, useEffect} from 'react';
+import React, {ComponentType, Suspense, useEffect} from 'react';
 // import type {PropsWithChildren} from 'react';
 // import {Platform} from 'react-native';
 import {
@@ -17,23 +17,24 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
-const CounterApp = React.lazy(() => import('App1/CounterApp'));
+// import CounterApp from './CounterApp';
+// const CounterApp = React.lazy(() => import('App1/CounterApp'));
+const MemberCard = React.lazy(() => import('App1/MemberCard'));
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: '#fff'}}>
       <View>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <ScrollView>
           <View style={styles.textHeading}>
-            <Text style={styles.textValue}> App 2</Text>
+            <Text style={styles.textValue}> Shell App </Text>
           </View>
         </ScrollView>
         <Suspense fallback={<Text>Loading</Text>}>
-          <CounterApp />
+          <MemberCard />
         </Suspense>
       </View>
     </SafeAreaView>

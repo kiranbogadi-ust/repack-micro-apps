@@ -1,16 +1,19 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {fileURLToPath} from 'node:url';
 import * as Repack from '@callstack/repack';
-import pkj from './package.json' with { type: 'json' };
-import { ExpoModulesPlugin } from "@callstack/repack-plugin-expo-modules";
-import fetch from 'node-fetch'; // Ensure you have node-fetch installed
+import {ExpoModulesPlugin} from '@callstack/repack-plugin-expo-modules';
+import fetch from 'node-fetch';
+
+import {createRequire} from 'module';
+const require = createRequire(import.meta.url);
+const pkg = require('./package.json');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function getRemoteConfig() {
   try {
-    const response = await fetch('http://localhost:3000/config'); // Replace with your API URL
+    const response = await fetch('http://127.0.0.1:3000/config'); // Replace with your API URL
     const data = await response.json();
 
     return data || {};
@@ -20,7 +23,7 @@ async function getRemoteConfig() {
   }
 }
 
-export default getRemoteConfig().then((remoteModules) => ({
+export default getRemoteConfig().then(remoteModules => ({
   context: __dirname,
   entry: './index.js',
   resolve: {
@@ -43,12 +46,12 @@ export default getRemoteConfig().then((remoteModules) => ({
         App1: remoteModules.url,
       }, // Dynamically loaded remotes
       shared: Object.fromEntries(
-        Object.entries(pkj.dependencies).map(([dep, { version }]) => {
+        Object.entries(pkg.dependencies).map(([dep, {version}]) => {
           return [
             dep,
-            { singleton: true, eager: true, requiredVersion: version },
+            {singleton: true, eager: true, requiredVersion: version},
           ];
-        })
+        }),
       ),
     }),
   ],
