@@ -8,7 +8,9 @@ const MemberCard = () => {
         <View style={styles.cardContainer}>
           <View style={styles.profileSection}>
             <Image
-              source={{uri: 'https://via.placeholder.com/80x80'}}
+              source={{
+                uri: 'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
+              }}
               style={styles.profileImage}
             />
             <View>
