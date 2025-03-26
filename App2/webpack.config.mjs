@@ -98,11 +98,25 @@ export default getRemoteConfig().then(remoteModules => ({
       tsLoaderConfiguration,
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!@callstack\/repack)/, // Process Re.Pack files too
+        exclude:
+          /node_modules\/(?!(react-native-vector-icons|react-native-paper|react-native)\/)/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+              {
+                plugins: [
+                  ['@babel/plugin-transform-class-properties', {loose: true}],
+                  ['@babel/plugin-transform-private-methods', {loose: true}],
+                  [
+                    '@babel/plugin-transform-private-property-in-object',
+                    {loose: true},
+                  ],
+                ],
+              },
+            ],
           },
         },
       },

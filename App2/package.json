@@ -7,10 +7,10 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest",
     "web": "webpack serve --mode=development --config webpack.config.mjs",
     "start:app:web": "concurrently \"npm run start\" \"npm run web\"",
-    "start:web": "react-native start --config ./rspack.web.config.mjs"
+    "start:web": "react-native start --config ./rspack.web.config.mjs",
+    "test": "jest"
   },
   "dependencies": {
     "@callstack/repack-plugin-expo-modules": "^5.0.3",
@@ -19,11 +19,15 @@
     "@module-federation/enhanced": "^0.11.0",
     "@rspack/cli": "^1.2.8",
     "expo": "^52.0.38",
+    "expo-font": "^13.0.4",
     "node-fetch": "^3.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-native": "0.76.7",
+    "react-native-paper": "^5.13.1",
     "react-native-polyfill-globals": "^3.1.0",
+    "react-native-safe-area-context": "^5.3.0",
+    "react-native-vector-icons": "^10.2.0",
     "react-native-web": "^0.19.13"
   },
   "devDependencies": {
@@ -36,6 +40,7 @@
     "@react-native-community/cli-platform-ios": "15.0.1",
     "@react-native/babel-preset": "0.76.7",
     "@react-native/eslint-config": "0.76.7",
+    "@react-native/gradle-plugin": "^0.78.1",
     "@react-native/metro-config": "0.76.7",
     "@react-native/typescript-config": "0.76.7",
     "@rspack/core": "~1.2.0",
