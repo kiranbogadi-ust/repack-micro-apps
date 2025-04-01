@@ -1,12 +1,12 @@
 {
     "config": {
         "name": "micro-version-url",
-        "url": "App1@http://127.0.0.1:9002/android/app1.container.js.bundle",
+        "url": "App1@http://192.168.0.102:9002/android/app1.container.js.bundle",
         "webUrl": "App1@http://localhost:9012/app1.container.bundle"
     },  
     "config2": {
         "name": "micro-version-url",
-        "url": "App1_1@http://127.0.0.1:9003/android/app1_1.container.js.bundle",
+        "url": "App1_1@http://192.168.0.102:9003/android/app1_1.container.js.bundle",
         "webUrl": "App1_1@http://localhost:9013/app1_1.container.bundle"
     }
 }

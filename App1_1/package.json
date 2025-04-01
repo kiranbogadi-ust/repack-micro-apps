@@ -6,8 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "start": "react-native start --port 9003",
-    "web": "webpack serve --mode=development --port 9013 --config webpack.config.mjs",
+    "start": "react-native start --port 9003 --host 192.168.0.102",
+    "web": "webpack serve --mode=development --port 9013 --config webpack.config.mjs --host 192.168.0.102",
     "start:app:web": "concurrently \"npm run start\" \"npm run web\"",
     "test": "jest"
   },

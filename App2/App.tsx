@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {ComponentType, Suspense, useEffect} from 'react';
+import React, {ComponentType, Suspense, useEffect, useState} from 'react';
 // import type {PropsWithChildren} from 'react';
 // import {Platform} from 'react-native';
 import {PaperProvider} from 'react-native-paper';
@@ -19,13 +19,13 @@ import {
   View,
 } from 'react-native';
 import {Appbar, Searchbar} from 'react-native-paper';
-// import CounterApp from './CounterApp';
-// const CounterApp = React.lazy(() => import('App1/CounterApp'));
+import MyScreen from './MyScreen';
 const MemberCard = React.lazy(() => import('App1/MemberCard'));
+console.log(MemberCard);
 
 const Header = () => (
   <Appbar.Header style={{backgroundColor: '#4f59df'}}>
-    <Appbar.Content title="Shell App" color="#fff" />
+    <Appbar.Content title="Shell Appss" color="#fff" />
     <Appbar.Action icon="magnify" onPress={() => {}} />
     <Appbar.Action icon="dots-vertical" onPress={() => {}} />
   </Appbar.Header>

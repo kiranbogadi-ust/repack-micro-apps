@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {Chip} from 'react-native-paper';
+// import {CameraApp} from './CameraScreen';
 
 const {width} = Dimensions.get('window');
 const isMobile = width < 768;
@@ -65,6 +66,7 @@ const MemberCard = () => {
 
   return (
     <ScrollView style={styles.container}>
+      {/* <CameraApp /> */}
       <View>
         <FlatList
           ref={flatListRef}

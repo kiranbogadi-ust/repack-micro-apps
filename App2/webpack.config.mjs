@@ -65,7 +65,7 @@ const tsLoaderConfiguration = {
 
 async function getRemoteConfig() {
   try {
-    const response = await fetch('http://127.0.0.1:3000/config'); // Replace with your API URL
+    const response = await fetch('http://192.168.0.102:3000/config'); // Replace with your API URL
     const data = await response.json();
 
     return data || {};
@@ -75,69 +75,85 @@ async function getRemoteConfig() {
   }
 }
 
-export default getRemoteConfig().then(remoteModules => ({
-  entry: {
-    app: path.join(appDirectory, 'index.web.js'),
-  },
-  output: {
-    path: path.resolve(appDirectory, 'dist'),
-    publicPath: '/',
-    filename: 'rnw.bundle.js',
-  },
-  resolve: {
-    extensions: ['.web.tsx', '.web.ts', '.tsx', '.ts', '.web.js', '.js'],
-    alias: {
-      'react-native$': 'react-native-web',
+export default getRemoteConfig().then(remoteModules => {
+  return {
+    entry: {
+      app: path.join(appDirectory, 'index.web.js'),
     },
-  },
-  module: {
-    rules: [
-      babelLoaderConfiguration,
-      imageLoaderConfiguration,
-      svgLoaderConfiguration,
-      tsLoaderConfiguration,
-      {
-        test: /\.js$/,
-        exclude:
-          /node_modules\/(?!(react-native-vector-icons|react-native-paper|react-native)\/)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-              {
-                plugins: [
-                  ['@babel/plugin-transform-class-properties', {loose: true}],
-                  ['@babel/plugin-transform-private-methods', {loose: true}],
-                  [
-                    '@babel/plugin-transform-private-property-in-object',
-                    {loose: true},
+    output: {
+      path: path.resolve(appDirectory, 'dist'),
+      publicPath: '/',
+      filename: 'rnw.bundle.js',
+    },
+    resolve: {
+      extensions: ['.web.tsx', '.web.ts', '.tsx', '.ts', '.web.js', '.js'],
+      alias: {
+        'react-native$': 'react-native-web',
+      },
+    },
+    module: {
+      rules: [
+        babelLoaderConfiguration,
+        imageLoaderConfiguration,
+        svgLoaderConfiguration,
+        tsLoaderConfiguration,
+        {
+          test: /\.js$/,
+          exclude:
+            /node_modules\/(?!(react-native-vector-icons|react-native-paper|react-native)\/)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-react',
+                {
+                  plugins: [
+                    ['@babel/plugin-transform-class-properties', {loose: true}],
+                    ['@babel/plugin-transform-private-methods', {loose: true}],
+                    [
+                      '@babel/plugin-transform-private-property-in-object',
+                      {loose: true},
+                    ],
                   ],
-                ],
-              },
-            ],
+                },
+              ],
+            },
           },
         },
-      },
+      ],
+    },
+    plugins: [
+      new HtmlWebpackPlugin({template: path.join(appDirectory, 'index.html')}),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.DefinePlugin({__DEV__: JSON.stringify(true)}),
+      new ModuleFederationPlugin({
+        name: 'App2',
+        filename: 'app2.container.bundle',
+        remotes: {
+          App1: `promise new Promise(resolve => {
+            fetch('http://localhost:3000/config')
+              .then(res => res.json())
+              .then(data => {
+                const script = document.createElement('script');
+                script.src = data.webUrl;
+                script.onload = () => {
+                  resolve(globalThis[data.remoteName]);
+                };
+                 const firstScript = document.head.querySelector('script');
+              document.head.insertBefore(script, firstScript);
+
+              })
+              .catch(error => console.error('Error loading remote:', error));
+          })`,
+        },
+        shared: Object.fromEntries(
+          Object.entries(pkg.dependencies).map(([dep, {version}]) => [
+            dep,
+            {singleton: true, eager: true, requiredVersion: version},
+          ]),
+        ),
+      }),
     ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({template: path.join(appDirectory, 'index.html')}),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({__DEV__: JSON.stringify(true)}),
-    new ModuleFederationPlugin({
-      name: 'App2',
-      filename: 'app2.container.bundle',
-      remotes: {
-        App1: remoteModules.webUrl,
-      },
-      shared: Object.fromEntries(
-        Object.entries(pkg.dependencies).map(([dep, {version}]) => [
-          dep,
-          {singleton: true, eager: true, requiredVersion: version},
-        ]),
-      ),
-    }),
-  ],
-}));
+  };
+});
